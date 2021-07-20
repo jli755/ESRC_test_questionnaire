@@ -187,12 +187,18 @@ def generate_code_list(txt_file, question_label_file, output_question, output_in
             # print("="*80) 
             # print("{}: {}..{}".format(i, L[i], L[i+1])) 
 
+            # TODO: generalize this
+            if L[i] == 'Hospital':
+                question_1 = 'Hospital  YES/NO'
+            else:
+                question_1 = L[i]
+
             end_with_number = re.search(r'\d+', L[i+1]) 
             second = re.sub('(_\d+)$', '', L[i+1])
             if end_with_number is not None and second in L:
-                question, instruction, code_list, response = g(txt_file, L[i], second)
+                question, instruction, code_list, response = g(txt_file, question_1, second)
             else:                 
-                question, instruction, code_list, response = g(txt_file, L[i], L[i+1])
+                question, instruction, code_list, response = g(txt_file, question_1, L[i+1])
                     
             out_question.write('%s\t%s\n' %(L[i], question))
             
